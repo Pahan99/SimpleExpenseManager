@@ -16,14 +16,40 @@
 
 package lk.ac.mrt.cse.dbs.simpleexpensemanager;
 
+import static org.junit.Assert.assertTrue;
+
 import android.app.Application;
+import android.content.Context;
 import android.test.ApplicationTestCase;
+
+import androidx.test.core.app.ApplicationProvider;
+
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import lk.ac.mrt.cse.dbs.simpleexpensemanager.control.ExpenseManager;
+import lk.ac.mrt.cse.dbs.simpleexpensemanager.control.SQLiteDemoExpenseManager;
+import lk.ac.mrt.cse.dbs.simpleexpensemanager.control.exception.ExpenseManagerException;
+import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.database.SQLiteHelper;
 
 /**
  * <a href="http://d.android.com/tools/testing/testing_android.html">Testing Fundamentals</a>
  */
-public class ApplicationTest extends ApplicationTestCase<Application> {
-    public ApplicationTest() {
-        super(Application.class);
+public class ApplicationTest{
+
+    private static ExpenseManager expenseManager;
+
+    @BeforeClass
+    public static void add_account_test() throws ExpenseManagerException {
+        Context context = ApplicationProvider.getApplicationContext();
+        SQLiteHelper.createContext(context);
+        expenseManager = new SQLiteDemoExpenseManager(context);
+
+        expenseManager.addAccount("456789","NSB","test user",15000);
+    }
+
+    @Test
+    public void testAddAccount(){
+        assertTrue(expenseManager.getAccountNumbersList().contains("456789"));
     }
 }
