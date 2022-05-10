@@ -16,6 +16,7 @@
 
 package lk.ac.mrt.cse.dbs.simpleexpensemanager;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import android.app.Application;
@@ -27,10 +28,15 @@ import androidx.test.core.app.ApplicationProvider;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.control.ExpenseManager;
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.control.SQLiteDemoExpenseManager;
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.control.exception.ExpenseManagerException;
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.database.SQLiteHelper;
+import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.model.ExpenseType;
 
 /**
  * <a href="http://d.android.com/tools/testing/testing_android.html">Testing Fundamentals</a>
@@ -51,5 +57,16 @@ public class ApplicationTest{
     @Test
     public void testAddAccount(){
         assertTrue(expenseManager.getAccountNumbersList().contains("456789"));
+    }
+
+    @Test
+    public void testCountTransactions(){
+        int old_count = expenseManager.getTransactionLogs().size();
+
+
+        expenseManager.getTransactionsDAO()
+                .logTransaction(new Date(),"456789", ExpenseType.EXPENSE,2000);
+
+        assertEquals(expenseManager.getTransactionLogs().size() - old_count , 1);
     }
 }
