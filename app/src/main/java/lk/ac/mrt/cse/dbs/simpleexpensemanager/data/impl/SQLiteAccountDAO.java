@@ -30,7 +30,7 @@ public class SQLiteAccountDAO implements AccountDAO {
         List<String> account_no_list = new LinkedList<>();
 
         for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-            String account_no = cursor.getString(cursor.getColumnIndex("account_no"));
+            String account_no = cursor.getString(cursor.getColumnIndexOrThrow("account_no"));
             account_no_list.add(account_no);
         }
 
@@ -45,10 +45,10 @@ public class SQLiteAccountDAO implements AccountDAO {
         List<Account> account_list = new LinkedList<>();
 
         for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-            String account_no = cursor.getString(cursor.getColumnIndex("account_no"));
-            String bank_name = cursor.getString(cursor.getColumnIndex("bank_name"));
-            String account_holder = cursor.getString(cursor.getColumnIndex("account_holder"));
-            Double balance = cursor.getDouble(cursor.getColumnIndex("balance"));
+            String account_no = cursor.getString(cursor.getColumnIndexOrThrow("account_no"));
+            String bank_name = cursor.getString(cursor.getColumnIndexOrThrow("bank_name"));
+            String account_holder = cursor.getString(cursor.getColumnIndexOrThrow("account_holder"));
+            Double balance = cursor.getDouble(cursor.getColumnIndexOrThrow("balance"));
 
             Account account = new Account(account_no,bank_name,account_holder,balance);
             account_list.add(account);
@@ -62,10 +62,10 @@ public class SQLiteAccountDAO implements AccountDAO {
         SQLiteDatabase database = sqLiteHelper.getReadableDatabase();
         Cursor cursor = database.rawQuery("SELECT * FROM accounts WHERE account_no="+accountNo,null);
         cursor.moveToFirst();
-        String account_no = cursor.getString(cursor.getColumnIndex("account_no"));
-        String bank_name = cursor.getString(cursor.getColumnIndex("bank_name"));
-        String account_holder = cursor.getString(cursor.getColumnIndex("account_holder"));
-        Double balance = cursor.getDouble(cursor.getColumnIndex("balance"));
+        String account_no = cursor.getString(cursor.getColumnIndexOrThrow("account_no"));
+        String bank_name = cursor.getString(cursor.getColumnIndexOrThrow("bank_name"));
+        String account_holder = cursor.getString(cursor.getColumnIndexOrThrow("account_holder"));
+        Double balance = cursor.getDouble(cursor.getColumnIndexOrThrow("balance"));
 
         Account account = new Account(account_no,bank_name,account_holder,balance);
         return account;
