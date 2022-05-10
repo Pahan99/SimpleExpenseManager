@@ -36,6 +36,7 @@ import lk.ac.mrt.cse.dbs.simpleexpensemanager.control.ExpenseManager;
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.control.SQLiteDemoExpenseManager;
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.control.exception.ExpenseManagerException;
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.database.SQLiteHelper;
+import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.exception.InvalidAccountException;
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.model.ExpenseType;
 
 /**
@@ -60,12 +61,12 @@ public class ApplicationTest{
     }
 
     @Test
-    public void testCountTransactions(){
+    public void testCountTransactions() throws InvalidAccountException {
         int old_count = expenseManager.getTransactionLogs().size();
-
 
         expenseManager.getTransactionsDAO()
                 .logTransaction(new Date(),"456789", ExpenseType.EXPENSE,2000);
+        expenseManager.getAccountsDAO().updateBalance("456789",ExpenseType.EXPENSE,2000);
 
         assertEquals(expenseManager.getTransactionLogs().size() - old_count , 1);
     }

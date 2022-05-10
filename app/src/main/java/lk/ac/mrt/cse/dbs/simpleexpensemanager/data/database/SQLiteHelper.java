@@ -11,8 +11,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     private static SQLiteHelper sqLiteHelperInstance;
 
     public static SQLiteHelper getInstance(){
-
-        return sqLiteHelperInstance;
+            return sqLiteHelperInstance;
     }
 
     private SQLiteHelper(@Nullable Context context) {
