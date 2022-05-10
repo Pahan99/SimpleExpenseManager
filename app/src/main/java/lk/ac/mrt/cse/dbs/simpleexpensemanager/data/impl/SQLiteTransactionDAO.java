@@ -56,10 +56,10 @@ public class SQLiteTransactionDAO implements TransactionDAO {
         List<Transaction> transactionList = new LinkedList<>();
 
         for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-            String account_no = cursor.getString(cursor.getColumnIndex("account_no"));
-            String date = cursor.getString(cursor.getColumnIndex("date"));
-            String expense_type = cursor.getString(cursor.getColumnIndex("expense_type"));
-            Double amount = cursor.getDouble(cursor.getColumnIndex("amount"));
+            String account_no = cursor.getString(cursor.getColumnIndexOrThrow("account_no"));
+            String date = cursor.getString(cursor.getColumnIndexOrThrow("date"));
+            String expense_type = cursor.getString(cursor.getColumnIndexOrThrow("expense_type"));
+            Double amount = cursor.getDouble(cursor.getColumnIndexOrThrow("amount"));
 
             ExpenseType expenseType = expense_type.equals(ExpenseType.EXPENSE.toString()) ? ExpenseType.EXPENSE : ExpenseType.INCOME;
 
